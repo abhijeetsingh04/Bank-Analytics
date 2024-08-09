@@ -1,6 +1,6 @@
 # Bank Analytics
 
-## Objectives
+## Objective
  The primary objective was to transform key performance indicators (KPIs) into intuitive visualizations. The aim was to create clear and comprehensible charts and graphs that addressed the specified KPIs, making it easy for everyone to understand the company's performance. This goal challenged me to refine my data analysis skills and effectively communicate insights visually, thereby facilitating better-informed decision-making based on the data.
 
 
