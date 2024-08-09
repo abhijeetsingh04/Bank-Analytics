@@ -1,0 +1,80 @@
+#KPI 
+/*
+- Year wise loan amount Stats
+- Grade and sub grade wise revol_bal
+- Total Payment for Verified Status Vs Total Payment for Non Verified Status
+- State wise and month wise loan status
+- Home ownership Vs last payment date stats
+*/
+
+-------------------------------------------------------------------------------
+
+select * from finance_1;
+select * from finance_2;
+
+-------------------------------------------------------------------------------
+
+select count(*) 
+FROM finance_1;
+
+select count(*) 
+FROM finance_2;
+
+-------------------------------------------------------------------------------
+
+#KPI 1
+ -- Year wise loan amount Stats
+ 
+select 
+    year(issue_d) as issue_d_year, sum(loan_amnt) as Total_loan_amnt
+    from finance_1
+group by issue_d_year
+order by issue_d_year;
+
+ --------------------------------------------------------------------------------------------------------------------
+ 
+ #KPI 2
+-- Grade and sub grade wise revol_baL
+
+select 
+    grade, sub_grade, sum(revol_bal) as total_revol_bal 
+    from finance_1 join finance_2 
+on (finance_1.id = finance_2.id)
+group by grade , sub_grade
+order by grade, sub_grade;
+
+--------------------------------------------------------------------------------------------------------------------------
+
+#KPI 3
+-- Total Payment for Verified Status Vs Total Payment for Non Verified Status
+
+select 
+    verification_status, round(sum(total_pymnt),0) as total_pymnt
+    from finance_1 join finance_2 
+on (finance_1.id = finance_2.id)
+where verification_status in('verified','Not verified') 
+group by verification_status 
+having sum(total_pymnt);
+
+--------------------------------------------------------------------------------------------------------------------
+
+#KPI 4
+-- State wise and month wise loan status
+
+SELECT
+    addr_state, month(issue_d) as issue_d_month, loan_status, sum(loan_amnt)
+    from finance_1
+group by addr_state, issue_d_month, loan_status
+order by addr_state, issue_d_month, loan_status;
+
+---------------------------------------------------------------------------------------------------------------------
+
+#KPI 5
+-- Home ownership Vs last payment date stats
+
+select 
+	home_ownership, sum(last_pymnt_d) as last_pymnt_d
+    from finance_1 join finance_2 
+on (finance_1.id = finance_2.id)
+group by home_ownership 
+having sum(last_pymnt_d);
